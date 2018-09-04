@@ -3,15 +3,16 @@
 # Build a bunch of animal reports
 animals <- list("Elephant", "Giraffe", "Koala", "Anaconda")
 
-lapply(animals
+purrr::map(
+  animals
   , function(x){
-  rmarkdown::render(
-    "animal-report.Rmd"
-    , params=list(animal = x)
-    , output_file = tolower(
-      paste0(x,".html")
-    )
-  )
+   rmarkdown::render(
+     "animal-report.Rmd"
+     , params=list(animal = x)
+     , output_file = tolower(
+       paste0(x,".html")
+     )
+   )
   }
 )
 
@@ -28,4 +29,7 @@ build_airplane_report <- function(carrier) {
   )
 }
 
-lapply(carriers, build_airplane_report)
+purrr::map(carriers, build_airplane_report)
+
+# in base R
+# lapply(carriers, build_airplane_report)
