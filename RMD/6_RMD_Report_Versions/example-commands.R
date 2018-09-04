@@ -3,19 +3,17 @@
 # Build a bunch of animal reports
 animals <- list("Elephant", "Giraffe", "Koala", "Anaconda")
 
-purrr::map(
-  animals
-  , function(x){
-   rmarkdown::render(
-     "animal-report.Rmd"
-     , params=list(animal = x)
-     , output_file = tolower(
-       paste0(x,".html")
-     )
-   )
+animals %>% map(
+  function(x){
+    rmarkdown::render(
+      "animal-report.Rmd"
+      , params=list(animal = x)
+      , output_file = tolower(
+        paste0(x,".html")
+      )
+    )
   }
 )
-
 
 # Build the airplane reports (requires a database with airlines and flights tables)
 #Set WD
