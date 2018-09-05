@@ -3,18 +3,31 @@
 # Build a bunch of animal reports
 animals <- list("Elephant", "Giraffe", "Koala", "Anaconda")
 
+# base R
 lapply(animals
-  , function(x){
-  rmarkdown::render(
-    "animal-report.Rmd"
-    , params=list(animal = x)
-    , output_file = tolower(
-      paste0(x,".html")
-    )
-  )
-  }
+       , function(x){
+         rmarkdown::render(
+           "animal-report.Rmd"
+           , params=list(animal = x)
+           , output_file = tolower(
+             paste0(x,".html")
+           )
+         )
+       }
 )
 
+# tidyverse
+animals %>% purrr::map(
+  function(x){
+    rmarkdown::render(
+      "animal-report.Rmd"
+      , params=list(animal = x)
+      , output_file = tolower(
+        paste0(x,".html")
+      )
+    )
+  }
+)
 
 # Build the airplane reports (requires a database with airlines and flights tables)
 #Set WD
@@ -27,5 +40,8 @@ build_airplane_report <- function(carrier) {
     , output_file = tolower(paste0(carrier,".html"))
   )
 }
-
+# base R
 lapply(carriers, build_airplane_report)
+
+# tidyverse
+purrr::map(carriers, build_airplane_report)
